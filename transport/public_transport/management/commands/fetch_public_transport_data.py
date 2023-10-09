@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from ...utils import request_and_save_public_transport_data  # Correct import path
+from ...utils import request_and_save_public_transport_data
 
 class Command(BaseCommand):
     help = 'Fetch and save public transportation data from Overpass API to the database'

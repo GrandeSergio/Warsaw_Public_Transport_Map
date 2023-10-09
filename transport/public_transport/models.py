@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class PublicTransportation(models.Model):
     transport_type = models.CharField(max_length=100)
     osm_id = models.BigIntegerField()
@@ -10,6 +11,7 @@ class PublicTransportation(models.Model):
     name = models.CharField(max_length=255)
     network = models.CharField(max_length=255)
     public_transport = models.CharField(max_length=255)
+    network_type = models.CharField(max_length=255)  # Add this field for network type
 
     def __str__(self):
         return self.name

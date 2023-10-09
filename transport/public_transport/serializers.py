@@ -5,4 +5,4 @@ from .models import PublicTransportation
 class PublicTransportationSerializer(serializers.ModelSerializer):
     class Meta:
         model = PublicTransportation
-        fields = ('id', 'lat', 'lon', 'name', 'network')
+        fields = ('id', 'lat', 'lon', 'name', 'network', 'network_type')

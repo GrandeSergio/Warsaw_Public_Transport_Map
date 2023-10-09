@@ -1,52 +1,89 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Public Transportation Map</title>
-  <link rel="stylesheet" href="https://openlayers.org/en/v6.6.0/css/ol.css" type="text/css">
-  <script src="https://openlayers.org/en/v6.6.0/build/ol.js" type="text/javascript"></script>
-  <style>
-    #map {
-      width: 100%;
-      height: 500px;
-    }
-  </style>
-</head>
-<body>
-  <div id="map" class="map"></div>
-  <script type="text/javascript">
-    var map = new ol.Map({
-      target: 'map',
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        })
-      ],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([0, 0]),
-        zoom: 2
-      })
-    });
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
 
-    // Fetch data from your API endpoint
-    fetch('/public-transportation/')
-      .then(response => response.json())
-      .then(data => {
-        data.forEach(item => {
-          var marker = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.fromLonLat([parseFloat(item.lon), parseFloat(item.lat)])),
-          });
+<div id="mapContainer">
+    <div id="map" class="map"></div>
+    <div class="layer-tree-container">
+        <button id="closeLayerTreeBtn" class="btn-close"></button>
+          <div id="layerTree">
+            <h6>Network Types</h6>
 
-          var vectorSource = new ol.source.Vector({
-            features: [marker]
-          });
+            <div class="form-check">
+                <div class="networkTypeOption">
+                    <input id="busCheckbox" class="form-check-input" type="checkbox" checked />
+                    <label class="form-check-label bus-border" for="busCheckbox">
+                        <img src="data:image/svg+xml,{{ svg_data.bus|urlencode }}" class="layer-tree-svg" alt="Bus Icon" /> Bus
+                    </label>
+                </div>
+            </div>
 
-          var markerVectorLayer = new ol.layer.Vector({
-            source: vectorSource,
-          });
+            <div class="form-check">
+                <div class="networkTypeOption">
+                    <input id="railwayCheckbox" class="form-check-input" type="checkbox" checked />
+                    <label class="form-check-label railway-border" for="railwayCheckbox">
+                        <img src="data:image/svg+xml,{{ svg_data.railway|urlencode }}" class="layer-tree-svg" alt="Railway Icon" /> Railway
+                    </label>
+                </div>
+            </div>
 
-          map.addLayer(markerVectorLayer);
-        });
-      });
-  </script>
-</body>
-</html>
+            <div class="form-check">
+                <div class="networkTypeOption">
+                    <input id="tramCheckbox" class="form-check-input" type="checkbox" checked />
+                    <label class="form-check-label tram-border" for="tramCheckbox">
+                        <img src="data:image/svg+xml,{{ svg_data.tram|urlencode }}" class="layer-tree-svg" alt="Tram Icon" /> Tram
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-check">
+                <div class="networkTypeOption">
+                    <input id="metroCheckbox" class="form-check-input" type="checkbox" checked />
+                    <label class="form-check-label metro-border" for="metroCheckbox">
+                        <img src="data:image/svg+xml,{{ svg_data.metro|urlencode }}" class="layer-tree-svg" alt="Metro Icon" /> Subway
+                    </label>
+                </div>
+            </div>
+            <br>
+            <h6>Basemaps</h6>
+            <div class="form-check">
+              <div class="baseLayerOption">
+                <input id="osmLayer" class="form-check-input" type="radio" name="baseLayer" checked />
+                <label class="form-check-label" for="osmLayer">OpenStreetMap</label>
+              </div>
+              <div class="baseLayerOption">
+                <input id="googleLayer" class="form-check-input" type="radio" name="baseLayer" />
+                <label class="form-check-label" for="googleLayer">Google Maps Hybrid</label>
+              </div>
+            </div>
+
+          </div>
+
+    </div>
+    <div id="loadingModal" class="modal">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+    </div>
+</div>
+
+<div id="popup" class="ol-popup">
+  <div class="ol-popup-content">
+    <a href="#" id="popup-closer" class="btn-close" aria-label="Close"></a>
+    <div id="popup-content"></div>
+  </div>
+</div>
+
+<script>
+    var svgData = {{ svg_data|safe }};
+    // Access and use SVG data as needed in your JavaScript code
+    var busSvg = svgData.bus;
+    var railwaySvg = svgData.railway;
+    var metroSvg = svgData.metro;
+    var tramSvg = svgData.tram;
+</script>
+
+<script src="{% static 'js/map.js' %}" type="text/javascript"></script>
+{% endblock %}

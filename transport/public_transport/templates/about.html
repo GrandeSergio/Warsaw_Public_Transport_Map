@@ -1,0 +1,43 @@
+
+<h1 class="mt-5">Warsaw Public Transport Map</h1>
+<button class="btn-close" id="closeAboutButton"></button>
+<p>
+    Welcome to the Public Transportation Map application! This interactive map provides information about public transportation networks in Warsaw, including buses, railways, trams, and the metro.
+</p>
+<p>
+    Our mission is to make public transportation data accessible and user-friendly. With this map, you can explore various public transportation routes, stops, and stations in Warsaw and plan your journeys more efficiently.
+</p>
+<h2>Features</h2>
+<ul>
+    <li>View bus stops, railway stations, tram stops, and metro stations on the map.</li>
+    <li>Toggle different transportation layers for better visualization.</li>
+    <li>Click on markers to view detailed information about specific stops and stations.</li>
+    <li>Explore the map seamlessly with zoom and pan functionality.</li>
+</ul>
+<h2>Transportation </h2>
+<div id="border-line" class="border-1 pt-3">
+    <p class="text-muted">
+        <table width="100%" style="font-size: 20px;">
+            <tr>
+                <td style="color: #009c2c">Bus Stop&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">{% autoescape off %}{{ svg_data.bus }}{% endautoescape %}</svg></td>
+                <td>Bus stops are designated locations where buses pick up and drop off passengers. They form the backbone of public transportation systems.</td>
+            </tr>
+            <tr>
+                <td style="color: #ad00f7">Railway Station&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">{% autoescape off %}{{ svg_data.railway }}{% endautoescape %}</svg></td>
+                <td>Railway stations are key transportation hubs for trains. They connect various cities and regions through rail networks.</td>
+            </tr>
+            <tr>
+                <td style="color: #db3102">Tram Station&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">{% autoescape off %}{{ svg_data.tram }}{% endautoescape %}</svg></td>
+                <td>Tram stations are stops along tramway tracks where trams pick up and drop off passengers. They are commonly seen in urban public transportation networks.</td>
+            </tr>
+            <tr>
+                <td style="color: #064fd6">Subway Station&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">{% autoescape off %}{{ svg_data.metro }}{% endautoescape %}</svg></td>
+                <td>Subway stations, also known as metro stations, are underground railway stations. They are commonly found in urban areas and facilitate rapid transit.</td>
+            </tr>
+        </table>
+    </p>
+</div>
